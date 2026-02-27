@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Part-Time Job Finder</title>
+
+<style>
+/* Single Color Theme */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #e6f2ff;
+}
+
+/* Header */
+header {
+    background-color: #0077cc;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Form Styling */
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #0077cc;
+    border-radius: 5px;
+}
+
+/* Button */
+button {
+    background-color: #0077cc;
+    color: white;
+    padding: 12px;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+/* Job Cards */
+.job-card {
+    background: white;
+    padding: 15px;
+    margin-top: 15px;
+    border-left: 5px solid #0077cc;
+    border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🎓 Campus Part-Time Job Finder</h1>
+<p>Safe Jobs Matching Your College Schedule</p>
+</header>
+
+<div class="container">
+
+<h2>Find a Suitable Job</h2>
+
+<form>
+<label>Name</label>
+<input type="text" placeholder="Enter your name">
+
+<label>Gender</label>
+<select>
+<option>Male</option>
+<option>Female</option>
+<option>Prefer not to say</option>
+</select>
+
+<label>College Timing</label>
+<select>
+<option>Morning (8AM - 1PM)</option>
+<option>Afternoon (1PM - 5PM)</option>
+<option>Flexible</option>
+</select>
+
+<label>Preferred Job Type</label>
+<select>
+<option>Online Work</option>
+<option>Teaching Assistant</option>
+<option>Store Assistant</option>
+<option>Delivery Support</option>
+<option>Freelancing</option>
+</select>
+
+<label>Safety Preference</label>
+<select>
+<option>Work From Home</option>
+<option>Verified Workplace Only</option>
+<option>Day Shift Only</option>
+</select>
+
+<button type="submit">Search Jobs</button>
+</form>
+
+<h2>Available Safe Jobs</h2>
+
+<div class="job-card">
+<h3>Online Tutor</h3>
+<p>Timing: Evening</p>
+<p>Location: Work From Home</p>
+<p>Safety: Verified Employer</p>
+</div>
+
+<div class="job-card">
+<h3>Café Assistant</h3>
+<p>Timing: Afternoon Shift</p>
+<p>Location: Near Campus</p>
+<p>Safety: CCTV & Verified Staff</p>
+</div>
+
+<div class="job-card">
+<h3>Content Writing Intern</h3>
+<p>Timing: Flexible</p>
+<p>Location: Remote</p>
+<p>Safety: Online Verified Company</p>
+</div>
+
+</div>
+
+</body>
+</html>
