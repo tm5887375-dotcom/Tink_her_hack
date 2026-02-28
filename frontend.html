@@ -4,21 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Aesthetic Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <title>Campus Part-Time Job Finder</title>
 
 <style>
 
-/* Pastel Minimal Theme */
 body{
     font-family:'Poppins',sans-serif;
     margin:0;
     background:#f7f6ff;
 }
 
-/* Header */
 header{
     background:#cdb4db;
     text-align:center;
@@ -33,14 +30,12 @@ header h1{
     color:#3a3a3a;
 }
 
-/* Container */
 .container{
     max-width:900px;
     margin:auto;
     padding:20px;
 }
 
-/* Form */
 form{
     background:white;
     padding:20px;
@@ -56,7 +51,6 @@ input,select{
     border:1px solid #e0c3fc;
 }
 
-/* Button */
 button{
     background:#bde0fe;
     border:none;
@@ -70,7 +64,6 @@ button:hover{
     background:#a2d2ff;
 }
 
-/* Job Cards */
 .job-card{
     background:white;
     padding:15px;
@@ -79,20 +72,9 @@ button:hover{
     border-radius:10px;
 }
 
-.women{
-    border-left:6px solid #ffafcc;
-}
-
 .section-title{
     color:#6d597a;
     margin-top:30px;
-}
-
-.badge{
-    background:#ffd6a5;
-    padding:3px 8px;
-    border-radius:5px;
-    font-size:12px;
 }
 
 footer{
@@ -117,105 +99,126 @@ footer{
 
 <h2>Find Your Ideal Job</h2>
 
-<!-- ✅ CONNECTED TO JAVA BACKEND -->
-<form action="JobFinderServlet" method="post">
+<!-- 🔥 Connected to Flask Backend -->
+<form id="jobForm">
 
 <label>Name</label>
-<input type="text" name="name"
-placeholder="Enter your name" required>
-
-<label>Gender</label>
-<select name="gender">
-<option>Male</option>
-<option>Female</option>
-<option>Prefer not to say</option>
-</select>
+<input type="text" name="name" placeholder="Enter your name" required>
 
 <label>College Timing</label>
-<select name="timing">
+<select name="timing" required>
+<option value="">Select Timing</option>
 <option>Morning</option>
 <option>Afternoon</option>
 <option>Flexible</option>
 </select>
 
 <label>Preferred Job Type</label>
-<select name="jobType">
+<select name="jobType" required>
+<option value="">Select Job Type</option>
 <option>Online Work</option>
 <option>Teaching</option>
 <option>Store Assistant</option>
 <option>Freelancing</option>
 </select>
 
-<label>Safety Preference</label>
-<select name="safety">
-<option>Work From Home</option>
-<option>Verified Workplace Only</option>
-<option>Day Shift Only</option>
-</select>
-
 <button type="submit">Search Jobs</button>
 
 </form>
 
-<!-- COMMON JOBS -->
-<h2 class="section-title">✅ Common Student Jobs (Ernakulam)</h2>
+<h2 class="section-title">🎯 Recommended Jobs</h2>
 
-<div class="job-card">
-<h3>Online Tutor <span class="badge">Verified</span></h3>
-<p>Location: Work From Home</p>
-<p>Timing: Evening</p>
-<p>Pay: ₹6,000 – ₹12,000/month</p>
-<button>Apply</button>
-</div>
-
-<div class="job-card">
-<h3>Café Assistant</h3>
-<p>Location: Kakkanad, Ernakulam</p>
-<p>Timing: Afternoon</p>
-<p>Pay: ₹8,000 – ₹10,000/month</p>
-<button>Apply</button>
-</div>
-
-<div class="job-card">
-<h3>Content Writing Intern</h3>
-<p>Location: Remote</p>
-<p>Timing: Flexible</p>
-<p>Pay: ₹5,000 – ₹15,000/month</p>
-<button>Apply</button>
-</div>
-
-<!-- WOMEN ONLY JOBS -->
-<h2 class="section-title">👩 Women-Only Safe Jobs</h2>
-
-<div class="job-card women">
-<h3>Library Assistant</h3>
-<p>Location: Edappally, Ernakulam</p>
-<p>Timing: Day Shift</p>
-<p>Pay: ₹7,000 – ₹9,000/month</p>
-<button>Apply</button>
-</div>
-
-<div class="job-card women">
-<h3>Kids Tuition Mentor</h3>
-<p>Location: Aluva</p>
-<p>Timing: Evening</p>
-<p>Pay: ₹8,000 – ₹14,000/month</p>
-<button>Apply</button>
-</div>
-
-<div class="job-card women">
-<h3>Boutique Helper</h3>
-<p>Location: Marine Drive, Ernakulam</p>
-<p>Timing: Day Only</p>
-<p>Pay: ₹9,000 – ₹11,000/month</p>
-<button>Apply</button>
-</div>
+<div id="jobResults"></div>
 
 </div>
 
 <footer>
 <p>© 2026 Campus Job Finder | Student Safety First</p>
 </footer>
+
+<!-- ========================= -->
+<!-- JAVASCRIPT CONNECTION -->
+<!-- ========================= -->
+
+<script>
+
+document.getElementById("jobForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.querySelector("input[name='name']").value;
+    const timing = document.querySelector("select[name='timing']").value;
+    const jobType = document.querySelector("select[name='jobType']").value;
+
+    fetch("http://127.0.0.1:5000/search", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            timing: timing,
+            job_type: jobType
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        const results = document.getElementById("jobResults");
+        results.innerHTML = "";
+
+        if(data.length === 0){
+            results.innerHTML = "<p>No matching jobs found.</p>";
+            return;
+        }
+
+        data.forEach(job => {
+
+            const card = document.createElement("div");
+            card.className = "job-card";
+
+            card.innerHTML = `
+                <h3>${job.title}</h3>
+                <p><strong>Location:</strong> ${job.location}</p>
+                <p><strong>Timing:</strong> ${job.timing}</p>
+                <p><strong>Pay:</strong> ₹${job.pay}</p>
+                <button onclick="applyJob(${job.id}, '${name}')">
+                    Apply
+                </button>
+            `;
+
+            results.appendChild(card);
+        });
+
+    })
+    .catch(error => {
+        alert("Error connecting to backend server");
+        console.error(error);
+    });
+
+});
+
+
+function applyJob(jobId, name){
+
+    fetch(`http://127.0.0.1:5000/apply/${jobId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: name })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(error => {
+        alert("Application failed");
+        console.error(error);
+    });
+
+}
+
+</script>
 
 </body>
 </html>
